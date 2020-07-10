@@ -1,0 +1,11 @@
+<!DOCTYPE html>
+<html lang="en">
+    <%- include('../partials/head.ejs') %>
+    <body>
+        <%- include('../partials/header.ejs') %> <% movies.map(movie => { %>
+        <h1><%= movie.title %></h1>
+        <h2><%= movie.year %></h2>
+        <% }) %>
+        <img src="../assets/images/image.jpg" alt="gita" />
+    </body>
+</html>
