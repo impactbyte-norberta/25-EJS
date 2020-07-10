@@ -1,8 +1,12 @@
 const express = require("express");
 const app = express();
 const ejs = require("ejs");
-
 const PORT = process.env.PORT || 4000;
+
+const todos = require("./data/data");
+
+app.use(express.json()); // body-parser, raw
+app.use(express.urlencoded({ extended: false })); // www-form-url-encoded
 
 // Membaca file .ejs
 app.set("view engine", "ejs");
@@ -11,7 +15,7 @@ app.set("view engine", "ejs");
 app.use(express.static("views"));
 
 app.get("/", (req, res) => {
-    res.send("Selamat datang di EJS demo");
+    res.render("pages/home");
 });
 
 // send data to ejs file
@@ -42,6 +46,25 @@ app.get("/movies/:title", (req, res) => {
 
     res.render("pages/movieDetails", {
         title,
+    });
+});
+
+// todo route
+app.get("/todos", (req, res) => {
+    res.send(todos);
+});
+
+app.post("/todos", (req, res) => {
+    const { name } = req.body;
+
+    todos.push({
+        name,
+        isDone: false,
+    });
+
+    res.send({
+        message: "Data berhasil diinput",
+        todo: { name, isDone: false },
     });
 });
 
